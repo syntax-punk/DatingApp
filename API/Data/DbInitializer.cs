@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,15 +23,21 @@ public class DbInitializer
         if (context.Users.Any())
             return;
 
+        using var hmac = new HMACSHA512();
+        
         var users = new List<AppUser>
         {
             new()
             {
-                UserName = "bob"
+                UserName = "bob",
+                PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$")),
+                PasswordSalt = hmac.Key
             },
             new()
             {
-                UserName = "jane"
+                UserName = "jane",
+                PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$")),
+                PasswordSalt = hmac.Key
             },
         };
         
