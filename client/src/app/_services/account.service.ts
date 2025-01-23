@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { LoginModel } from '../nav/nav.component';
+import { inject, Injectable, signal } from '@angular/core';
+import { LoginModel, User } from '../_models/User';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,22 @@ import { LoginModel } from '../nav/nav.component';
 export class AccountService {
   private http = inject(HttpClient);
   baseUrl = 'https://localhost:5001/api/';
+  currentUser = signal<User | null>(null);
 
   login(model: LoginModel) {
-    return this.http.post(this.baseUrl + 'account/login', model);
+    return this.http.post<User>(this.baseUrl + 'account/login', model)
+      .pipe(
+        map(user => {
+          if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.currentUser.set(user);
+          }
+        })
+      );
+  }
+
+  logout() {
+    localStorage.removeItem('user');
+    this.currentUser.set(null);
   }
 }

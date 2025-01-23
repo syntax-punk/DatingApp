@@ -2,11 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
-export type LoginModel = {
-  username: string;
-  password: string;
-};
+import { LoginModel } from '../_models/User';
 
 @Component({
   selector: 'app-nav',
@@ -15,22 +11,18 @@ export type LoginModel = {
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
-  private accountService = inject(AccountService);
+  accountService = inject(AccountService);
 
-  loggedIn = false;
   model: LoginModel = {
     username: '',
     password: ''
   };
 
   login() {
-    console.log('got model -> ', this.model);
-
     this.accountService.login(this.model)
       .subscribe({
         next: response => {
           console.log('got response -> ', response);
-          this.loggedIn = true;
         },
         error: (error) => {
           console.error(error);
@@ -39,10 +31,6 @@ export class NavComponent {
   }
 
   logout() {
-    this.model = {
-      username: '',
-      password: ''
-    };
-    this.loggedIn = false;
+    this.accountService.logout();
   }
 }
