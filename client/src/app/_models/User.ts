@@ -1,9 +1,14 @@
-export type User = {
+export interface User {
   username: string;
   token: string;
-};
+}
 
-export type LoginModel = {
+export interface LoginModel {
   username: string;
   password: string;
-};
+}
+
+export interface RegisterModel {
+  username: string;
+  password: string;
+}

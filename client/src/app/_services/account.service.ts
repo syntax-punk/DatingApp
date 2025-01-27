@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { LoginModel, User } from '../_models/User';
+import { LoginModel, RegisterModel, User } from '../_models/User';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -26,5 +26,19 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
+  }
+
+  register(model: RegisterModel) {
+    return this.http.post<User>(this.baseUrl + 'account/register', model)
+      .pipe(
+        map(user => {
+          if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.currentUser.set(user);
+          }
+
+          return user;
+        })
+      );
   }
 }
