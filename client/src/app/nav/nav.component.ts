@@ -3,14 +3,16 @@ import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LoginModel } from '../_models/User';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
-  imports: [FormsModule, BsDropdownModule],
+  imports: [FormsModule, BsDropdownModule, RouterLink, RouterLinkActive],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
+  private router = inject(Router);
   accountService = inject(AccountService);
 
   model: LoginModel = {
@@ -21,9 +23,7 @@ export class NavComponent {
   login() {
     this.accountService.login(this.model)
       .subscribe({
-        next: response => {
-          console.log('got response -> ', response);
-        },
+        next: () => this.router.navigateByUrl('/members'),
         error: (error) => {
           console.error(error);
         }
@@ -32,5 +32,6 @@ export class NavComponent {
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl('/');
   }
 }
