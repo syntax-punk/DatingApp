@@ -4,6 +4,7 @@ import { AccountService } from '../_services/account.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { LoginModel } from '../_models/User';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -13,6 +14,8 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class NavComponent {
   private router = inject(Router);
+  private toaster = inject(ToastrService);
+
   accountService = inject(AccountService);
 
   model: LoginModel = {
@@ -24,9 +27,7 @@ export class NavComponent {
     this.accountService.login(this.model)
       .subscribe({
         next: () => this.router.navigateByUrl('/members'),
-        error: (error) => {
-          console.error(error);
-        }
+        error: error => this.toaster.error(error.error)
       });
   }
 
