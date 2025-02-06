@@ -1,27 +1,40 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-info">
   <div class="container">
-    <a routerLink="/" routerLinkActive="active" class="navbar-brand">Dating App</a>
+    <a routerLink="/" routerLinkActive="active" class="navbar-brand"
+      >Dating App</a
+    >
 
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        @if (accountService.currentUser()) {
-          <li class="nav-item">
-            <a routerLink="/members" routerLinkActive="active" class="nav-link">Matches</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/lists" routerLinkActive="active" class="nav-link">Lists</a>
-          </li>
-          <li class="nav-item">
-            <a routerLink="/messages" routerLinkActive="active" class="nav-link">Messages</a>
-          </li>
-        }
+      @if (accountService.currentUser()) {
         <li class="nav-item">
-          <a routerLink="/errors" routerLinkActive="active" class="nav-link">Test Errors</a>
+          <a routerLink="/members" routerLinkActive="active" class="nav-link"
+            >Matches</a
+          >
         </li>
+        <li class="nav-item">
+          <a routerLink="/lists" routerLinkActive="active" class="nav-link"
+            >Lists</a
+          >
+        </li>
+        <li class="nav-item">
+          <a routerLink="/messages" routerLinkActive="active" class="nav-link"
+            >Messages</a
+          >
+        </li>
+      }
+      <li class="nav-item">
+        <a routerLink="/errors" routerLinkActive="active" class="nav-link"
+          >Test Errors</a
+        >
+      </li>
     </ul>
 
     @if (accountService.currentUser()) {
       <div dropdown class="dropdown">
-        <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">
+        <a
+          dropdownToggle
+          class="dropdown-toggle text-light text-decoration-none"
+        >
           Welcome {{ accountService.currentUser()?.username | titlecase }}
         </a>
         <div *dropdownMenu class="dropdown-menu">
@@ -34,21 +47,27 @@
     }
 
     @if (!accountService.currentUser()) {
-      <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off">
+      <form
+        #loginForm="ngForm"
+        (ngSubmit)="login()"
+        class="d-flex"
+        autocomplete="off"
+      >
         <input
           class="form-control me-2"
           name="username"
           placeholder="Username"
-          [(ngModel)]="model.username">
+          [(ngModel)]="model.username"
+        />
         <input
           class="form-control me-2"
           name="password"
           placeholder="Password"
           type="password"
-          [(ngModel)]="model.password">
+          [(ngModel)]="model.password"
+        />
         <button class="btn btn-primary" type="submit">Login</button>
       </form>
     }
-
   </div>
 </nav>

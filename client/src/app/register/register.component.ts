@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-register',
   imports: [FormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   private accountService = inject(AccountService);
@@ -17,7 +17,7 @@ export class RegisterComponent {
   cancelRegister = output<boolean>();
   model: RegisterModel = {
     username: '',
-    password: ''
+    password: '',
   };
 
   register() {
@@ -25,14 +25,13 @@ export class RegisterComponent {
       throw new Error('Username and password are required');
     }
 
-    this.accountService.register(this.model)
-      .subscribe({
-        next: response => {
-          console.log('-> register response: ', response);
-          this.cancel();
-        },
-        error: error => this.toaster.error(error.error)
-      });
+    this.accountService.register(this.model).subscribe({
+      next: (response) => {
+        console.log('-> register response: ', response);
+        this.cancel();
+      },
+      error: (error) => this.toaster.error(error.error),
+    });
   }
 
   cancel() {

@@ -5,7 +5,7 @@ import { Component, inject } from '@angular/core';
   selector: 'app-test-errors',
   imports: [],
   templateUrl: './test-errors.component.html',
-  styleUrl: './test-errors.component.css'
+  styleUrl: './test-errors.component.css',
 })
 export class TestErrorsComponent {
   baseUrl = 'https://localhost:5001/api/';
@@ -19,7 +19,7 @@ export class TestErrorsComponent {
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 
@@ -30,7 +30,7 @@ export class TestErrorsComponent {
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 
@@ -41,7 +41,7 @@ export class TestErrorsComponent {
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 
@@ -52,7 +52,7 @@ export class TestErrorsComponent {
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 
@@ -64,7 +64,7 @@ export class TestErrorsComponent {
       error: (error) => {
         console.error(error);
         this.validationErrors = error;
-      }
+      },
     });
   }
 }

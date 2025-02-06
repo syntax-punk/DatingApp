@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NavComponent } from "./nav/nav.component";
+import { NavComponent } from './nav/nav.component';
 import { AccountService } from './_services/account.service';
 import { User } from './_models/User';
 import { RouterOutlet } from '@angular/router';
@@ -8,7 +8,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   imports: [RouterOutlet, NavComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   private accountService = inject(AccountService);
@@ -19,8 +19,7 @@ export class AppComponent implements OnInit {
 
   setCurrentUser() {
     const userString = localStorage.getItem('user');
-    if (!userString)
-      return;
+    if (!userString) return;
 
     const user = JSON.parse(userString) as User;
     this.accountService.currentUser.set(user);

@@ -4,7 +4,7 @@ import { LoginModel, RegisterModel, User } from '../_models/User';
 import { map } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccountService {
   private http = inject(HttpClient);
@@ -12,15 +12,14 @@ export class AccountService {
   currentUser = signal<User | null>(null);
 
   login(model: LoginModel) {
-    return this.http.post<User>(this.baseUrl + 'account/login', model)
-      .pipe(
-        map(user => {
-          if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            this.currentUser.set(user);
-          }
-        })
-      );
+    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
+      map((user) => {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUser.set(user);
+        }
+      })
+    );
   }
 
   logout() {
@@ -29,16 +28,15 @@ export class AccountService {
   }
 
   register(model: RegisterModel) {
-    return this.http.post<User>(this.baseUrl + 'account/register', model)
-      .pipe(
-        map(user => {
-          if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            this.currentUser.set(user);
-          }
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+      map((user) => {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUser.set(user);
+        }
 
-          return user;
-        })
-      );
+        return user;
+      })
+    );
   }
 }

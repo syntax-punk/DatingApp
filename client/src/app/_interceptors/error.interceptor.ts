@@ -9,7 +9,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toaster = inject(ToastrService);
 
   return next(req).pipe(
-    catchError(error => {
+    catchError((error) => {
       if (error) {
         switch (error.status) {
           case 400:
@@ -27,15 +27,18 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             }
             break;
           case 401:
-            toaster.error("Unathorized call", error.status);
+            toaster.error('Unathorized call', error.status);
             break;
           case 404:
             router.navigateByUrl('/not-found');
             break;
-          case 500:
-            { const navigationExtras: NavigationExtras = {state: { error: error.error }};
+          case 500: {
+            const navigationExtras: NavigationExtras = {
+              state: { error: error.error },
+            };
             router.navigateByUrl('/server-error', navigationExtras);
-            break; }
+            break;
+          }
           default:
             toaster.error('Something went wrong');
             break;

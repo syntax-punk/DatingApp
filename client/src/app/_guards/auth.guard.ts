@@ -7,10 +7,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   const accountService = inject(AccountService);
   const toaster = inject(ToastrService);
 
-  if (accountService.currentUser())
-    return true;
-  else
-    toaster.error('Please login to access this page');
+  if (accountService.currentUser()) return true;
+  else toaster.error('Please login to access this page');
 
   return false;
 };

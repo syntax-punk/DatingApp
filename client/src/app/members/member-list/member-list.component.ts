@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-member-list',
   imports: [],
   templateUrl: './member-list.component.html',
-  styleUrl: './member-list.component.css'
+  styleUrl: './member-list.component.css',
 })
-export class MemberListComponent {
-
-}
+export class MemberListComponent {}
