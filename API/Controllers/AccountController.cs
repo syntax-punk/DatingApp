@@ -16,27 +16,29 @@ public class AccountController(DataContext context, ITokenService tokenService) 
     {
         if (await UserExists(registerDto.Username))
             return BadRequest("Username is taken.");
-        
-        using var hmac = new HMACSHA512();
-        var user = new AppUser
-        {
-            UserName = registerDto.Username.ToLower(),
-            PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes(registerDto.Password)),
-            PasswordSalt = hmac.Key
-        };
 
-        context.Users.Add(user);
-        var result = await context.SaveChangesAsync() > 0;
-        
-        if (!result) return BadRequest("Failed to register user.");
+        return Ok();
 
-        var userDto = new UserDto
-        {
-            Username = registerDto.Username,
-            Token = tokenService.CreateToken(user)
-        };
-        
-        return userDto;
+        // using var hmac = new HMACSHA512();
+        // var user = new AppUser
+        // {
+        //     UserName = registerDto.Username.ToLower(),
+        //     PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes(registerDto.Password)),
+        //     PasswordSalt = hmac.Key
+        // };
+        //
+        // context.Users.Add(user);
+        // var result = await context.SaveChangesAsync() > 0;
+        //
+        // if (!result) return BadRequest("Failed to register user.");
+        //
+        // var userDto = new UserDto
+        // {
+        //     Username = registerDto.Username,
+        //     Token = tokenService.CreateToken(user)
+        // };
+        //
+        // return userDto;
     }
 
     [HttpPost("login")]
