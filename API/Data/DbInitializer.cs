@@ -27,18 +27,18 @@ public class DbInitializer
         
         var users = new List<AppUser>
         {
-            new()
-            {
-                UserName = "bob",
-                PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$")),
-                PasswordSalt = hmac.Key
-            },
-            new()
-            {
-                UserName = "jane",
-                PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$")),
-                PasswordSalt = hmac.Key
-            },
+            // new()
+            // {
+            //     UserName = "bob",
+            //     PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$")),
+            //     PasswordSalt = hmac.Key
+            // },
+            // new()
+            // {
+            //     UserName = "jane",
+            //     PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$")),
+            //     PasswordSalt = hmac.Key
+            // },
         };
         
         context.Users.AddRange(users);
