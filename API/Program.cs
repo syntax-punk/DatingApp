@@ -29,6 +29,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-DbInitializer.InitDb(app);
+// Initialize the database 
+await DbInitializer.InitDb(app);
 
 app.Run();

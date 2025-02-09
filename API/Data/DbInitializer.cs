@@ -1,47 +1,53 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
-public class DbInitializer
+public abstract class DbInitializer
 {
-    public static void InitDb(WebApplication app)
+    public static async Task InitDb(WebApplication app)
     {
         using var score = app.Services.CreateScope();
-        var context = score.ServiceProvider.GetRequiredService<DataContext>()
-            ?? throw new InvalidOperationException("Failed to get DataContext service.");
-
-        SeedData(context);
+        var services = score.ServiceProvider;
+        try
+        {
+            var context = services.GetRequiredService<DataContext>();
+            await context.Database.MigrateAsync();
+            
+            await SeedUsers(context);
+        }
+        catch (Exception ex)
+        {
+            var logger = services.GetRequiredService<ILogger<DbInitializer>>();
+            logger.LogError(ex, "An error occurred during migration.");
+        }
     }
 
-    private static void SeedData(DataContext context)
+    private static async Task SeedUsers(DataContext context)
     {
-        context.Database.Migrate();
-        
-        if (context.Users.Any())
-            return;
+        if (await context.Users.AnyAsync()) return;
 
-        using var hmac = new HMACSHA512();
-        
-        var users = new List<AppUser>
+        var userData = await File.ReadAllTextAsync("Data/UserSeedData.json");
+        var options = new JsonSerializerOptions
         {
-            // new()
-            // {
-            //     UserName = "bob",
-            //     PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$")),
-            //     PasswordSalt = hmac.Key
-            // },
-            // new()
-            // {
-            //     UserName = "jane",
-            //     PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$")),
-            //     PasswordSalt = hmac.Key
-            // },
+            PropertyNameCaseInsensitive = true
         };
-        
-        context.Users.AddRange(users);
-        context.SaveChanges();
+        var users = JsonSerializer.Deserialize<List<AppUser>>(userData, options);
+        if (users == null) return;
+
+        foreach (var user in users)
+        {
+            using var hmac = new HMACSHA512();
+            user.UserName = user.UserName.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF32.GetBytes("Pass123$"));
+            user.PasswordSalt = hmac.Key;
+
+            context.Users.Add(user);
+        }
+
+        await context.SaveChangesAsync();
     }
 }
