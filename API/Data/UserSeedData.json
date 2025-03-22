@@ -70,7 +70,7 @@
     "Country": "Liechtenstein",
     "Photos": [
       {
-        "Url": "https://randomuser.me/api/portraits/women/10.jpg",
+        "Url": "https://randomuser.me/api/portraits/women/12.jpg",
         "IsMain": true
       }
     ]
@@ -108,7 +108,7 @@
     "Country": "Panama",
     "Photos": [
       {
-        "Url": "https://randomuser.me/api/portraits/men/36.jpg",
+        "Url": "https://randomuser.me/api/portraits/men/35.jpg",
         "IsMain": true
       }
     ]
