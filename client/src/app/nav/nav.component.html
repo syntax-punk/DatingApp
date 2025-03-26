@@ -38,10 +38,17 @@
           Welcome {{ accountService.currentUser()?.username | titlecase }}
         </a>
         <div *dropdownMenu class="dropdown-menu">
-          <a class="dropdown-item">My Profile</a>
+          <a routerLink="/member/edit" class="dropdown-item">Edit Profile</a>
           <a class="dropdown-item">Settings</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logout()">Log out</a>
+          <a
+            class="dropdown-item"
+            (click)="logout()"
+            (keydown.enter)="logout()"
+            tabindex="0"
+          >
+            Log out
+          </a>
         </div>
       </div>
     }
