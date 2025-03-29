@@ -20,6 +20,10 @@ export class MembersService {
     return this.http.get<Member[]>(`${this.baseUrl}users`);
   }
 
+  updateMember(member: Member) {
+    return this.http.put(`${this.baseUrl}users`, member);
+  }
+
   // deprecated: can be removed
   getHttpOptions() {
     return {
