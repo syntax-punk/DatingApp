@@ -1,60 +1,23 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
   <h2 class="text-center text-primary">Sign up</h2>
   <hr />
-  <div class="mb-3 form-floating">
-    <input
-      id="username"
-      [class.is-invalid]="registerForm.get('username')?.invalid
-        && registerForm.get('username')?.touched"
-      type="text"
-      class="form-control"
-      formControlName="username"
-      placeholder="Username"
-    />
-    <label for="username">Username</label>
-    <div class="invalid-feedback text-start">Enter the username</div>
-  </div>
+  <app-text-input
+    [id]="'username'"
+    [formControl]="$any(registerForm.controls['username'])"
+    [label]="'Username'"></app-text-input>
 
-  <div class="mb-3 form-floating">
-    <input
-      id="password"
-      [class.is-invalid]="registerForm.get('password')?.invalid
-        && registerForm.get('password')?.touched"
-      type="password"
-      class="form-control"
-      formControlName="password"
-      placeholder="Password"
-    />
-    <label for="password">Password</label>
-    @if (registerForm.get('password')?.hasError('required')) {
-      <div class="invalid-feedback text-start">Enter the password</div>
-    }
-    @if (registerForm.get('password')?.hasError('minlength')) {
-      <div class="invalid-feedback text-start">Password length is not sufficient</div>
-    }
-    @if (registerForm.get('password')?.hasError('maxlength')) {
-      <div class="invalid-feedback text-start">Password is too long</div>
-    }
-  </div>
+  <app-text-input
+    [id]="'password'"
+    [formControl]="$any(registerForm.controls['password'])"
+    [label]="'Password'"
+    [type]="'password'"></app-text-input>
 
-  <div class="mb-3 form-floating">
-    <input
-      id="confirmPassword"
-      [class.is-invalid]="registerForm.get('confirmPassword')?.invalid
-        && registerForm.get('confirmPassword')?.touched"
-      type="password"
-      class="form-control"
-      formControlName="confirmPassword"
-      placeholder="Confirm Password"
-    />
-    <label for="confirmpassword">Confirm Password</label>
-    @if (registerForm.get('confirmPassword')?.hasError('required')) {
-      <div class="invalid-feedback text-start">Confirm password please</div>
-    }
-    @if (registerForm.get('confirmPassword')?.hasError('isMatching')) {
-      <div class="invalid-feedback text-start">Confirm password is not matching</div>
-    }
-  </div>
+  <app-text-input
+    [id]="'confirmpassword'"
+    [formControl]="$any(registerForm.controls['confirmPassword'])"
+    [label]="'Confirm Password'"
+    [type]="'password'"></app-text-input>
+
   <div class="form-group text-center">
     <button type="submit" class="btn btn-success me-2" [disabled]="registerForm.invalid">Register</button>
     <button type="button" class="btn btn-default me-2" (click)="cancel()">

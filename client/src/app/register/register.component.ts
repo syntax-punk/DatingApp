@@ -10,10 +10,11 @@ import {
 import { AccountService } from '../_services/account.service';
 import { RegisterModel } from '../_models/User';
 import { ToastrService } from 'ngx-toastr';
+import { TextInputComponent } from '../_forms/text-input/text-input.component';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TextInputComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
