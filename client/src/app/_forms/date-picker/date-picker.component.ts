@@ -5,20 +5,29 @@ import {
   NgControl,
   ReactiveFormsModule,
 } from '@angular/forms';
+import {
+  BsDatepickerConfig,
+  BsDatepickerModule,
+} from 'ngx-bootstrap/datepicker';
 
 @Component({
-  selector: 'app-text-input',
-  imports: [ReactiveFormsModule],
-  templateUrl: './text-input.component.html',
-  styleUrl: './text-input.component.css',
+  selector: 'app-date-picker',
+  imports: [BsDatepickerModule, ReactiveFormsModule],
+  templateUrl: './date-picker.component.html',
+  styleUrl: './date-picker.component.css',
 })
-export class TextInputComponent implements ControlValueAccessor {
+export class DatePickerComponent implements ControlValueAccessor {
   id = input.required<string>();
   label = input<string>('');
-  type = input<string>('text');
+  maxDate = input<Date>();
+  bsConfig?: Partial<BsDatepickerConfig>;
 
   constructor(@Self() public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;
+    this.bsConfig = {
+      containerClass: 'theme-dark-blue',
+      dateInputFormat: 'DD MMMM YYYY',
+    };
   }
 
   get control(): FormControl {

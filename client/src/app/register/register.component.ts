@@ -12,10 +12,11 @@ import { AccountService } from '../_services/account.service';
 import { RegisterModel } from '../_models/User';
 import { ToastrService } from 'ngx-toastr';
 import { TextInputComponent } from '../_forms/text-input/text-input.component';
+import { DatePickerComponent } from '../_forms/date-picker/date-picker.component';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, TextInputComponent],
+  imports: [ReactiveFormsModule, TextInputComponent, DatePickerComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -30,9 +31,11 @@ export class RegisterComponent implements OnInit {
     password: '',
   };
   registerForm: FormGroup = new FormGroup({});
+  maxDate: Date = new Date();
 
   ngOnInit(): void {
     this.initializeForm();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
   initializeForm() {
